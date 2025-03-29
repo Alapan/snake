@@ -2,58 +2,67 @@ import { RefObject, useEffect } from 'react';
 
 interface GridProps {
   canvasRef: RefObject<HTMLCanvasElement | null>;
+  gridSize: number;
 }
 
-export const Grid = ({ canvasRef }: GridProps) => {
-  const gridSize = 50;
+export const Grid = ({
+  canvasRef,
+  gridSize,
+}: GridProps) => {
+  
   const boundaryWidth = 5;
 
-  const drawGrid = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
-    if (canvas && ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'green';
-      ctx.lineWidth = 1;
+  const drawGrid = (
+    ctx: CanvasRenderingContext2D,
+    canvasWidth: number,
+    canvasHeight: number
+) => {
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.strokeStyle = 'green';
+    ctx.lineWidth = 1;
 
-      // Grid lines
-      for (let x = 0; x < canvas.width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.stroke();
-      }
-
-      for (let y = 0; y < canvas.height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
-      }
-
-      // Grid boundaries
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = boundaryWidth;
+    // Grid lines
+    for (let x = 0; x < canvasWidth; x += gridSize) {
       ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.lineTo(canvas.width, 0);
-      ctx.lineTo(canvas.width, canvas.height);
-      ctx.lineTo(0, canvas.height);
-      ctx.lineTo(0, 0);
-      ctx.closePath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, canvasHeight);
       ctx.stroke();
     }
+
+    for (let y = 0; y < canvasHeight; y += gridSize) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(canvasWidth, y);
+      ctx.stroke();
+    }
+
+    // Grid boundaries
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = boundaryWidth;
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(canvasWidth, 0);
+    ctx.lineTo(canvasWidth, canvasHeight);
+    ctx.lineTo(0, canvasHeight);
+    ctx.lineTo(0, 0);
+    ctx.closePath();
+    ctx.stroke();
   };
 
   useEffect(() => {
     const canvas = canvasRef?.current;
-    const ctx = canvas?.getContext('2d');
-  
-    if (canvas && ctx) {
+    if (canvas) {
       canvas.width = 600;
       canvas.height = 600;
+      const ctx = canvas.getContext('2d');
 
-      drawGrid(canvas, ctx);
-    };
-  });
+      if (ctx) {
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        drawGrid(ctx, canvasWidth, canvasHeight);
+      }
+    }
+  }, []);
 
   return null;
 };
