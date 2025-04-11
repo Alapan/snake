@@ -1,28 +1,35 @@
-import { RefObject, useEffect } from 'react';
+import { useRive } from '@rive-app/react-canvas';
 
 interface SnakeProps {
-  canvasRef: RefObject<HTMLCanvasElement | null>;
-  gridSize: number; 
+  gridSize: number;
+  gridWidth: number;
+  gridHeight: number;
 };
 
 export const Snake = ({
-  canvasRef,
-  gridSize
+  gridSize,
+  gridWidth,
+  gridHeight,
 }: SnakeProps) => {
+  const { RiveComponent } = useRive({
+    src: 'snake.riv',
+    autoplay: true,
+  });
 
-  const drawSnake = (ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = 'blue';
-    ctx.fillRect(0, 0, gridSize * 4, gridSize);
-  };
+  const width = gridWidth * gridSize;
+  const height = gridHeight * gridSize
 
-  useEffect(() => {
-    const canvas = canvasRef?.current;
-    const ctx = canvas?.getContext('2d');
-
-    if (canvas && ctx) {
-      drawSnake(ctx);
-    };
-  }, []);
-
-  return null;
+  return (
+    <div
+      className='snake-wrapper'
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        position: 'absolute',
+        zIndex: 2,
+      }}
+    >
+      <RiveComponent />
+    </div>
+  );
 };
