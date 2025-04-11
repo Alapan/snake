@@ -10,12 +10,13 @@ function App() {
   return (
     <>
       <h1>Snake Game</h1>
-      <canvas ref={canvasRef}>
-        <Grid canvasRef={canvasRef} gridSize={gridSize}/>
-        <Snake canvasRef={canvasRef} gridSize={gridSize}/>
-      </canvas>  
-    </>
+      <div className='canvas-wrapper'>
+        <canvas ref={canvasRef} className='game-canvas' />
+        <Snake gridSize={gridSize} gridWidth={4} gridHeight={1}/>
+      </div>
 
+      <Grid canvasRef={canvasRef} gridSize={gridSize}/>
+    </>
   );
 }
 
