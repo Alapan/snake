@@ -3,19 +3,21 @@ import { RefObject, useEffect } from 'react';
 interface GridProps {
   canvasRef: RefObject<HTMLCanvasElement | null>;
   gridSize: number;
+  canvasHeight: number;
+  canvasWidth: number;
 }
 
 export const Grid = ({
   canvasRef,
   gridSize,
+  canvasHeight,
+  canvasWidth,
 }: GridProps) => {
   
   const boundaryWidth = 5;
 
   const drawGrid = (
     ctx: CanvasRenderingContext2D,
-    canvasWidth: number,
-    canvasHeight: number
 ) => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.strokeStyle = 'green';
@@ -56,11 +58,7 @@ export const Grid = ({
       canvas.height = 600;
       const ctx = canvas.getContext('2d');
 
-      if (ctx) {
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
-        drawGrid(ctx, canvasWidth, canvasHeight);
-      }
+      ctx && drawGrid(ctx);
     }
   }, []);
 
