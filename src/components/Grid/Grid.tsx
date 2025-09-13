@@ -2,14 +2,14 @@ import { RefObject, useEffect } from 'react';
 
 interface GridProps {
   canvasRef: RefObject<HTMLCanvasElement | null>;
-  gridSize: number;
+  boxSize: number;
   canvasHeight: number;
   canvasWidth: number;
 }
 
-export const Grid = ({
+const Grid = ({
   canvasRef,
-  gridSize,
+  boxSize,
   canvasHeight,
   canvasWidth,
 }: GridProps) => {
@@ -24,14 +24,14 @@ export const Grid = ({
     ctx.lineWidth = 1;
 
     // Grid lines
-    for (let x = 0; x < canvasWidth; x += gridSize) {
+    for (let x = 0; x < canvasWidth; x += boxSize) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, canvasHeight);
       ctx.stroke();
     }
 
-    for (let y = 0; y < canvasHeight; y += gridSize) {
+    for (let y = 0; y < canvasHeight; y += boxSize) {
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(canvasWidth, y);
@@ -64,3 +64,5 @@ export const Grid = ({
 
   return null;
 };
+
+export default Grid;

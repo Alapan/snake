@@ -1,33 +1,27 @@
 import { useRef } from 'react';
 import './App.css';
-import { Grid } from './components/Grid';
-import { Snake } from './components/Snake';
+import Grid from './components/Grid/Grid';
+import Snake from './components/Snake/Snake';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasWidth = 600;
-  const canvasHeight = 600;
-  const gridSize = 50;
+  const CANVAS_WIDTH = 600;
+  const CANVAS_HEIGHT = 600;
+  const BOX_SIZE = 50;
 
   return (
     <>
       <h1>Snake Game</h1>
       <div className='canvas-wrapper'>
         <canvas ref={canvasRef} className='game-canvas' />
-        <Snake
-          gridSize={gridSize}
-          gridWidth={4}
-          gridHeight={1}
-          canvasHeight={canvasHeight}
-          canvasWidth={canvasWidth}
-        />
+        <Snake boxSize={BOX_SIZE} numberOfBoxes={4} />
       </div>
 
       <Grid
         canvasRef={canvasRef}
-        gridSize={gridSize}
-        canvasHeight={canvasHeight}
-        canvasWidth={canvasWidth}
+        boxSize={BOX_SIZE}
+        canvasHeight={CANVAS_HEIGHT}
+        canvasWidth={CANVAS_WIDTH}
       />
     </>
   );
