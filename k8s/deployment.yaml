@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snake-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snake-app
+  template:
+    metadata:
+      labels:
+        app: snake-app
+    spec:
+      containers:
+        - name: snake-app
+          image: snake-app:latest
+          ports:
+            - containerPort: 80
