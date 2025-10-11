@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snake-deployment
+  labels:
+    app: snake-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snake-app
+  template:
+    metadata:
+      labels:
+        # Pod label - ensure this label matches the selector in service.yaml
+        app: snake-app
+    spec:
+      containers:
+        - name: snake-app
+          image: alapan9/snake-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
